@@ -3,27 +3,13 @@ const api = {
     key: '21fb11cf880bae45d62b41007980d15a'
 }
 
-async function Izhevsk() {
-    const resIzhevsk = await fetch(`${api.endpoint}weather?q=Izhevsk,ru&units=metric&lang=ru&appID=${api.key}`);
-    const resultIzhevsk = await resIzhevsk.json();
+let cityInput = getApi()
 
-
-    getOurDate();
-
-    let temperature = document.querySelector('#temperature');
-    temperature.innerHTML = `${Math.round(resultIzhevsk.main.temp)}<span>°</span>`;
-
-    let feelsLike = document.querySelector("#feelsLike");
-    feelsLike.innerHTML = `Ощущается как: ${Math.round(resultIzhevsk.main.feels_like)}<span>°</span>`;
-
-    let conditions = document.querySelector("#conditions");
-    conditions.textContent = `${resultIzhevsk.weather[0].description}`;
-
-    let variation = document.querySelector("#variation");
-    variation.innerHTML = `Min: ${Math.round(resultIzhevsk.main.temp_min)}<span>°</span> Max: ${Math.round(resultIzhevsk.main.temp_max)}<span>°</span>`
+async function getApi() { 
+    const resOne = await fetch(`https://ipgeolocation.abstractapi.com/v1/?api_key=64d391b3c5e34f2eb9a87b6b938de84c`);
+    const resultOne = await resOne.json(); 
+    getInfo(resultOne.city);
 }
-
-Izhevsk()
 
 
 const input = document.querySelector('#input');
@@ -40,8 +26,6 @@ async function getInfo(data) {
     const result = await res.json();
     displayResult(result);
 }
-
-
 
 function displayResult(result) {
 
@@ -75,11 +59,7 @@ function getOurDate() {
     const months = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"];
     let nowMonths = months[myDate.getMonth()]
 
-    // let nowHour = myDate.getHours();
-
-    // let nowMinutes = myDate.getMinutes();
-
     let showDate = document.querySelector('#date');
     showDate.innerHTML = `${nowDay}, ${todayDate} ${nowMonths}`;
-
 }
+
